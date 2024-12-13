@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.fakestore.components.CardCart
 import com.example.fakestore.components.CardProducts
 import com.example.fakestore.components.DrawerContent
 import com.example.fakestore.components.MainTopBar
@@ -87,7 +88,7 @@ fun WomensClothing(
                     .padding(it)
             ) {
                 items(products){ product ->
-                    CardProducts(product = product) {
+                    CardCart(product = product){
                         navController.navigate("ProductDetailsView/${product.id}")
                     }
                     Text(

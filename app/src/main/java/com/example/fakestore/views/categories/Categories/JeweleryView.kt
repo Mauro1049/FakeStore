@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.fakestore.components.CardCart
 import com.example.fakestore.components.CardProducts
 import com.example.fakestore.components.DrawerContent
 import com.example.fakestore.components.MainTopBar
@@ -31,6 +32,7 @@ import com.example.fakestore.views.products.ContentProductsView
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
+//Componente para visualizar los productos de la categoria Jewelery.
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun Jewelery(
@@ -39,18 +41,22 @@ fun Jewelery(
     navController: NavController,
     categoriesViewModel: CategoriesViewModel,
 ){
+    //se obtiene el estado del drawer
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
+    //se obtiene la lista de productos de la categoria Jewelery.
     LaunchedEffect(Unit) {
         categoriesViewModel.getProductsByCategory(nameCategory)
     }
 
+    //se obtiene la lista de productos de la categoria Jewelery.
     val products by categoriesViewModel.products
         .map { it[nameCategory] ?: emptyList() }
         .collectAsState(initial = emptyList())
 
+    //se muestra el drawer.
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -85,7 +91,7 @@ fun Jewelery(
                     .padding(it)
             ) {
                 items(products){ product ->
-                    CardProducts(product = product) {
+                    CardCart(product = product){
                         navController.navigate("ProductDetailsView/${product.id}")
                     }
                     Text(

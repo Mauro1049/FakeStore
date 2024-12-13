@@ -31,6 +31,7 @@ import com.example.fakestore.viewModel.CategoriesViewModel
 import com.example.fakestore.viewModel.LoginViewModel
 import kotlinx.coroutines.launch
 
+//Componente que muestra las categorias de productos disponibles en la tienda de productos.
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CategoriesView(
@@ -38,10 +39,12 @@ fun CategoriesView(
     navController: NavController,
     loginViewModel: LoginViewModel
 ){
+    //Variables para el manejo del drawer y el manejo de corutinas y el contexto.
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
+    //ModelNavigationDrawer para el manejo del drawer.
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -72,15 +75,23 @@ fun CategoriesView(
                 )
             },
         ) {
+            //Contenido de la vista de categorias.
             ContentCategoriesView(categoriesViewModel, it, navController)
         }
     }
 }
 
+//Contenido de la vista de categorias.
 @Composable
-fun ContentCategoriesView(categoriesViewModel: CategoriesViewModel, paddingValues: PaddingValues, navController: NavController){
+fun ContentCategoriesView(
+    categoriesViewModel: CategoriesViewModel,
+    paddingValues: PaddingValues,
+    navController: NavController
+){
+    //Se obtiene la lista de categorias desde el viewModel.
     val categories by categoriesViewModel.categories.collectAsState()
 
+    //Si la lista de categorias esta vacia, se muestra un texto cargando.
     if(categories.isEmpty()){
         Text(text = "Cargando")
     }else{
@@ -89,12 +100,14 @@ fun ContentCategoriesView(categoriesViewModel: CategoriesViewModel, paddingValue
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            //Se muestra la lista de categorias en una grilla.
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 contentPadding = PaddingValues(4.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
+                //Se muestra cada categoria en un card.
                 items(categories){ category ->
                     CardCategories(category){ categoryName ->
                         Log.d("Category", "Navigating to CategoryDetailsView with: $categoryName")

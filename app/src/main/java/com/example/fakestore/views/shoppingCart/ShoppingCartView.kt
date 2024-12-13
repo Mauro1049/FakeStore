@@ -109,7 +109,9 @@ fun ContentShoppingCartView(
             contentPadding = PaddingValues(16.dp)
         ) {
             items(products){ product ->
-                CardCart(product)
+                CardCart(product){
+                    navController.navigate("ProductDetailsView/${product.id}")
+                }
             }
         }
     }

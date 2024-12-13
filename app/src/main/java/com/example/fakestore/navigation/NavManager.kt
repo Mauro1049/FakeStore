@@ -36,6 +36,7 @@ fun NavManager(
         composable("LoginView") {
             LoginView(loginViewModel, navController)
         }
+        //
         composable("ProductsView/{token}", arguments = listOf(
             navArgument("token") { type = NavType.StringType }
         )) {
@@ -93,5 +94,4 @@ fun NavManager(
             )
         }
     }
-
 }

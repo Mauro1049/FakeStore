@@ -96,8 +96,6 @@ fun UserPerfilView(
             user?.let { it1 -> ContentUserPerfilView(it, it1) }
         }
     }
-
-
 }
 
 @Composable

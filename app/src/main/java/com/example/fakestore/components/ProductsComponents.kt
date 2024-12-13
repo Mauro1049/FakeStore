@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -37,6 +38,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -50,7 +53,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.fakestore.model.ProductsModel
-import com.example.fakestore.model.ShoppingCartModel
 
 
 //COMPONENTE PARA TOPBAR
@@ -62,7 +64,7 @@ fun MainTopBar(
     onClickBackButton: () -> Unit = {},
     onMenuClick: () -> Unit = {},
     onClickCart: () -> Unit
-    ){
+){
     TopAppBar(
         title = { Text(text = title, color = Color.Black, fontWeight = FontWeight.ExtraBold) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
@@ -132,6 +134,24 @@ fun CardProductsDetails(
     categoria: String,
     descripcion: String
 ){
+    val openDialog = remember { mutableStateOf(false) }
+
+    if(openDialog.value){
+        AlertDialog(
+            onDismissRequest = { openDialog.value = false },
+            title = { Text(text = "Producto agregado") },
+            text = { Text(text = "Producto agregado") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        openDialog.value = false
+                    }
+                ) {
+                    Text(text = "Aceptar")
+                }
+            }
+        )
+    }
     val image = rememberImagePainter(data = image)
     Card(
         onClick = { /*TODO*/ },
@@ -197,7 +217,9 @@ fun CardProductsDetails(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        openDialog.value = true
+                    },
                     modifier = Modifier
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp)
@@ -347,9 +369,10 @@ fun DrawerMenuItem(
 @Composable
 fun CardCart(
     product: ProductsModel,
+    onClick: () -> Unit
 ){
     Card(
-        onClick = { /*TODO*/ },
+        onClick = { onClick() },
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),

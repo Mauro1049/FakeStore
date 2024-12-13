@@ -14,6 +14,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    /*
+    * Esta funcion crea una instancia de Retrofit, y la utiliza para crear una instancia de APIFakeStore
+    * */
     @Singleton
     @Provides
     fun providesRetroFit(): Retrofit {
@@ -23,6 +26,9 @@ object AppModule {
             .build()
     }
 
+    /*
+    * Esta funcion crea una instancia de APIFakeStore, y la utiliza para crear una instancia de Retrofit
+    * */
     @Singleton
     @Provides
     fun providesAPiFakeStore(retrofit: Retrofit): APIFakeStore {

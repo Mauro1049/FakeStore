@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.fakestore.viewModel.LoginViewModel
 
+//Componente para iniciar sesión.
 @Composable
 fun LoginView(
     loginViewModel: LoginViewModel,
